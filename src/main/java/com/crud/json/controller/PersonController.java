@@ -38,4 +38,21 @@ public class PersonController {
         service.save(person);
     }
 
+    @PutMapping("/{id}")
+    public ResponseEntity<?> update(@RequestBody Person person, @PathVariable Integer id) {
+        try {
+            Person existPerson = service.get(id);
+            person.setId(id);
+            service.save(person);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @DeleteMapping("/{id}")
+    public void delete(@PathVariable Integer id) {
+        service.delete(id);
+    }
+
 }

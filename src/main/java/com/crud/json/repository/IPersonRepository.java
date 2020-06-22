@@ -13,4 +13,6 @@ public interface IPersonRepository {
     Person get(Integer id);
 
     void save(Person person);
+
+    void removePerson(int id);
 }

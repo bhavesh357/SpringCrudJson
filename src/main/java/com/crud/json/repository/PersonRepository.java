@@ -70,8 +70,7 @@ public class PersonRepository implements IPersonRepository{
 
     @Override
     public void save(Person person) {
-        loadData();
-        people.remove(person);
+        removePerson(person.getId());
         people.add(person);
         writeData();
         try {
@@ -80,6 +79,17 @@ public class PersonRepository implements IPersonRepository{
             e.printStackTrace();
         }
 
+    }
+
+    @Override
+    public void removePerson(int id) {
+        loadData();
+        for (Person p: people){
+            if (p.getId()==id){
+                people.remove(p);
+            }
+        }
+        writeData();
     }
 
     private void writeData() {
