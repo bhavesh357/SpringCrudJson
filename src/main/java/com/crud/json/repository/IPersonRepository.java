@@ -9,4 +9,6 @@ import java.util.List;
 @Repository
 public interface IPersonRepository {
     List<Person> findAll();
+
+    Person get(Integer id);
 }

@@ -1,5 +1,6 @@
 package com.crud.json.service;
 
+import com.crud.json.exception.PersonException;
 import com.crud.json.model.Person;
 import com.crud.json.repository.IPersonRepository;
 import com.crud.json.repository.PersonRepository;
@@ -11,10 +12,17 @@ import java.util.List;
 @Service
 public class PersonService {
 
-    @Autowired
     private IPersonRepository repo = new PersonRepository();
 
     public List<Person> listAll() {
         return repo.findAll();
+    }
+
+    public Person get(Integer id) {
+        Person person = repo.get(id);
+        if (person==null){
+            throw new PersonException(PersonException.ErrorType.NOT_FOUND);
+        }
+        return person;
     }
 }

@@ -9,17 +9,28 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @RestController
-@RequestMapping("/persons")
+@RequestMapping("/person")
 public class PersonController {
 
     @Autowired
     private PersonService service;
 
-    @GetMapping("")
+    @GetMapping("/all")
     public List<Person> list() {
         return service.listAll();
+    }
+
+    @GetMapping("/persons/{id}")
+    public ResponseEntity<Person> get(@PathVariable Integer id) {
+        try {
+            Person person = service.get(id);
+            return new ResponseEntity<Person>(person, HttpStatus.OK);
+        } catch (NoSuchElementException e) {
+            return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
+        }
     }
 
 }

@@ -1,5 +1,6 @@
 package com.crud.json.repository;
 
+import com.crud.json.exception.PersonException;
 import com.crud.json.model.Person;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -34,5 +35,15 @@ public class PersonRepository implements IPersonRepository{
     @Override
     public List<Person> findAll() {
         return people;
+    }
+
+    @Override
+    public Person get(Integer id) {
+        for (Person p: people) {
+            if (p.getId()==id){
+                return p;
+            }
+        }
+        return null;
     }
 }
