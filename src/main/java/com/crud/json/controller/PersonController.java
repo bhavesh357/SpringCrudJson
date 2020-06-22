@@ -9,15 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 
 @RestController
+@RequestMapping("/persons")
 public class PersonController {
 
     @Autowired
     private PersonService service;
 
-    @GetMapping("/persons")
+    @GetMapping("")
     public List<Person> list() {
         return service.listAll();
     }
