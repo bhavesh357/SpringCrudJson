@@ -14,11 +14,17 @@ import java.util.List;
 @Repository
 public class PersonRepository implements IPersonRepository{
     private List<Person> people;
+    private InputStream inputStream;
+    private ObjectMapper mapper;
     public PersonRepository() {
-        ObjectMapper mapper = new ObjectMapper();
+
+    }
+
+    public void loadData(){
+        mapper = new ObjectMapper();
 
         try {
-            InputStream inputStream = new FileInputStream(new File("./src/main/resources/person.json"));
+            inputStream = new FileInputStream(new File("./src/main/resources/person.json"));
             TypeReference<List<Person>> typeReference = new TypeReference<List<Person>>(){};
             people = mapper.readValue(inputStream, typeReference);
         } catch (FileNotFoundException e) {
@@ -34,16 +40,53 @@ public class PersonRepository implements IPersonRepository{
 
     @Override
     public List<Person> findAll() {
+        loadData();
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         return people;
     }
 
+    private void closeData() {
+
+    }
+
     @Override
-    public Person get(Integer id) {
+    public Person get(Integer id) {loadData();
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (Person p: people) {
             if (p.getId()==id){
                 return p;
             }
         }
         return null;
+    }
+
+    @Override
+    public void save(Person person) {
+        loadData();
+        people.remove(person);
+        people.add(person);
+        writeData();
+        try {
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+    }
+
+    private void writeData() {
+        try {
+            mapper.writeValue(new File("./src/main/resources/person.json"),people);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

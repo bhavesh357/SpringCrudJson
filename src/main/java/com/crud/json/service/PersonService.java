@@ -25,4 +25,8 @@ public class PersonService {
         }
         return person;
     }
+
+    public void save(Person person) {
+        repo.save(person);
+    }
 }

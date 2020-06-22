@@ -11,4 +11,6 @@ public interface IPersonRepository {
     List<Person> findAll();
 
     Person get(Integer id);
+
+    void save(Person person);
 }

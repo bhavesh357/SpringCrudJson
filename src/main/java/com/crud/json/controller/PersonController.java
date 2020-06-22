@@ -23,7 +23,7 @@ public class PersonController {
         return service.listAll();
     }
 
-    @GetMapping("/persons/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Person> get(@PathVariable Integer id) {
         try {
             Person person = service.get(id);
@@ -31,6 +31,11 @@ public class PersonController {
         } catch (NoSuchElementException e) {
             return new ResponseEntity<Person>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("")
+    public void add(@RequestBody Person person) {
+        service.save(person);
     }
 
 }
