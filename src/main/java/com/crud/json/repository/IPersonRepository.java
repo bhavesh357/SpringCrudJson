@@ -14,5 +14,5 @@ public interface IPersonRepository {
 
     void save(Person person);
 
-    void removePerson(int id);
+    void removePerson(Integer id);
 }

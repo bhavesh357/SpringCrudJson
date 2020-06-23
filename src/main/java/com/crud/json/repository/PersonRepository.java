@@ -54,7 +54,8 @@ public class PersonRepository implements IPersonRepository{
     }
 
     @Override
-    public Person get(Integer id) {loadData();
+    public Person get(Integer id) {
+        loadData();
         try {
             inputStream.close();
         } catch (IOException e) {
@@ -82,12 +83,16 @@ public class PersonRepository implements IPersonRepository{
     }
 
     @Override
-    public void removePerson(int id) {
+    public void removePerson(Integer id) {
         loadData();
+        Person toRemove=null;
         for (Person p: people){
             if (p.getId()==id){
-                people.remove(p);
+                toRemove=p;
             }
+        }
+        if (toRemove!=null){
+        people.remove(toRemove);
         }
         writeData();
     }

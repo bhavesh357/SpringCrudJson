@@ -30,7 +30,7 @@ public class PersonService {
         repo.save(person);
     }
 
-    public void delete(int id) {
+    public void delete(Integer id) {
         repo.removePerson(id);
     }
 }
